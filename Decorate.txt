@@ -1,0 +1,4 @@
+#include "Decorate/Class.txt"
+#include "Decorate/ArmorAndAmmo.txt"
+#include "Decorate/Weapons.txt"
+#include "Decorate/MedsAndPowerUps.txt"

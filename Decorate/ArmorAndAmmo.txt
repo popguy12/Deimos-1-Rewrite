@@ -1,0 +1,525 @@
+
+
+
+
+
+ACTOR LowCalBullets : Ammo
+{
+        Inventory.PickupMessage "Picked up some Low-Caliber Bullets."
+		Inventory.Amount 15
+		Inventory.MaxAmount 150
+		Ammo.BackpackAmount 15
+		Ammo.BackpackMaxAmount 300
+		Inventory.Icon "CLIPB0"
+		//XScale 0.3
+		//YScale 0.5
+		Scale 0.6
+		Translation "96:111=89:101", "6:6=104:104"
+		+DROPPED
+		States
+		{
+		Spawn:
+		CLIP A -1
+		Stop
+		}
+}
+
+ACTOR HighCalBullets : Ammo
+{
+        Inventory.PickupMessage "Picked up some High-Caliber Bullets."
+		Inventory.Amount 60
+		Inventory.MaxAmount 300
+		Ammo.BackpackAmount 60
+		Ammo.BackpackMaxAmount 600
+		Inventory.Icon "AMMOB0"
+		Scale 0.7
+		Translation "152:159=87:105", "112:127=93:111", "128:151=160:164", "78:78=109:109"
+		+DROPPED
+		States
+		{
+		Spawn:
+		AMMO A -1
+		Stop
+		}
+}
+
+ACTOR MagReplacer : RandomSpawner Replaces Clip
+{
+DropItem LowCalBullets,140,3
+DropItem HighCalBullets,50,1
+}
+
+ACTOR BulletBoxReplacer : RandomSpawner Replaces ClipBox
+{
+DropItem Slot4AmmoBundle,256
+}
+
+
+ACTOR Slot4AmmoBundle : CustomInventory 
+{
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_DropItem("LowCalBullets",15)
+  TNT1 A 0 A_DropItem("LowCalBullets",15)
+  TNT1 A 0 A_DropItem("LowCalBullets",15,100)
+  TNT1 A 0 A_DropItem("HighCalBullets",60)
+  TNT1 A 0 A_DropItem("HighCalBullets",60,50)
+  TNT1 A 0 A_DropItem("LightRockets",1,120)
+  TNT1 A 0 A_DropItem("LightRockets",1,100)
+  Stop
+  }
+}
+
+
+ACTOR StandardShells : Ammo
+{
+        Inventory.PickupMessage "Picked up some Standard Shotgun Shells."
+		Inventory.Amount 4
+		Inventory.MaxAmount 40
+		Ammo.BackpackAmount 8
+		Ammo.BackpackMaxAmount 80
+		Inventory.Icon "SHELA0"
+		+DROPPED
+		Scale 0.7
+		States
+		{
+		Spawn:
+		SHEL A -1
+		Stop
+		}
+}
+
+ACTOR SingleStandardShell : StandardShells
+{
+ Radius 2
+ Inventory.PickupMessage "Picked up a Standard Shotgun Shell."
+ Inventory.Amount 1
+ Scale 0.7
+ States
+ {
+ Spawn:
+ SHEL D -1
+ Stop
+ }
+}
+
+ACTOR AltShellBox : StandardShells
+{
+  Inventory.PickupMessage "$GOTSHELLBOX" // "Picked up a box of shotgun shells."
+  Inventory.Amount 20
+  States
+  {
+  Spawn:
+    SBOX A -1
+    Stop
+  }
+}
+
+ACTOR DragonsBreathShells : Ammo
+{
+        Inventory.PickupMessage "Picked up some DragonsBreath Shotgun Shells."
+		Inventory.Amount 4
+		Inventory.MaxAmount 20
+		Ammo.BackpackAmount 4
+		Ammo.BackpackMaxAmount 40
+		Inventory.Icon "SHELB0"
+		+DROPPED
+		Scale 0.7
+		Translation "173:191=216:223"
+		States
+		{
+		Spawn:
+		SHEL A -1
+		Stop
+		}
+}
+
+ACTOR SingleDragonsBreathShell : DragonsBreathShells
+{
+ Radius 2
+ Inventory.PickupMessage "Picked up a DragonsBreath Shotgun Shell."
+ Inventory.Amount 1
+ Scale 0.7
+ Translation "173:191=216:223"
+ States
+ {
+ Spawn:
+ SHEL D -1
+ Stop
+ }
+}
+
+ACTOR ExplosiveSlugShells : Ammo
+{
+        Inventory.PickupMessage "Picked up some Explosive Slug Shotgun Shells."
+		Inventory.Amount 4
+		Inventory.MaxAmount 20
+		Ammo.BackpackAmount 4
+		Ammo.BackpackMaxAmount 40
+		Inventory.Icon "SHELC0"
+		+DROPPED
+		Scale 0.7
+		Translation "173:191=198:207", "160:164=84:90"
+		States
+		{
+		Spawn:
+		SHEL A -1
+		Stop
+		}
+}
+
+ACTOR SingleExplosiveSlugShell : ExplosiveSlugShells
+{
+ Radius 2
+ Inventory.PickupMessage "Picked up a Explosive Slug Shotgun Shell."
+ Inventory.Amount 1
+ Scale 0.7
+ Translation "173:191=198:207", "160:164=84:90"
+ States
+ {
+ Spawn:
+ SHEL D -1
+ Stop
+ }
+}
+
+ACTOR ShellReplacer : RandomSpawner Replaces Shell
+{
+DropItem StandardShells,256,15
+DropItem DragonsBreathShells,256,1
+DropItem ExplosiveSlugShells,256,1
+}
+
+ACTOR ShellBoxReplacer : RandomSpawner Replaces ShellBox
+{
+DropItem Slot3AmmoBundle,256
+}
+
+ACTOR ShellRandomizer : RandomSpawner 
+{
+DropItem DragonsBreathShells,256,1
+DropItem ExplosiveSlugShells,256,1
+}
+
+ACTOR Slot3AmmoBundle : CustomInventory 
+{
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_DropItem("AltShellBox",20)
+  TNT1 A 0 A_DropItem("ShellRandomizer",1)
+  TNT1 A 0 A_DropItem("ShellRandomizer",1,100)
+  TNT1 A 0 A_DropItem("ShellRandomizer",1,100)
+  Stop
+  }
+}
+
+
+
+
+ACTOR LightRockets : Ammo
+{
+        Inventory.PickupMessage "Picked up a Light Rocket."
+		Inventory.Amount 1
+		Inventory.MaxAmount 16
+		Ammo.BackpackAmount 2
+		Ammo.BackpackMaxAmount 32 
+		Inventory.Icon "ROCKB0"
+		+DROPPED
+		Scale 0.5
+		Translation "64:79=96:111", "144:151=96:111", "128:143=96:106"
+		States
+		{
+		Spawn:
+		ROCK A -1
+		Stop
+		}
+}
+
+ACTOR StandardRockets : Ammo
+{
+        Inventory.PickupMessage "Picked up a Standard Rocket."
+		Inventory.Amount 1
+		Inventory.MaxAmount 8
+		Ammo.BackpackAmount 2
+		Ammo.BackpackMaxAmount 16
+		Inventory.Icon "ROCKA0"
+		+DROPPED
+		Scale 0.7
+		States
+		{
+		Spawn:
+		ROCK A -1
+		Stop
+		}
+}
+
+ACTOR RocketReplacer : RandomSpawner Replaces RocketAmmo
+{
+DropItem StandardRockets,120,1
+DropItem LightRockets,140,1
+}
+
+ACTOR RocketBoxReplacer : RandomSpawner Replaces RocketBox
+{
+DropItem Slot5AmmoBundle,256
+}
+
+ACTOR Slot5AmmoBundle : CustomInventory 
+{
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_DropItem("StandardRockets",1)
+  TNT1 A 0 A_DropItem("StandardRockets",1,100)
+  TNT1 A 0 A_DropItem("StandardRockets",1,90)
+  TNT1 A 0 A_DropItem("StandardRockets",1,80)
+  TNT1 A 0 A_DropItem("LightRockets",1)
+  TNT1 A 0 A_DropItem("LightRockets",1,140)
+  TNT1 A 0 A_DropItem("LightRockets",1,120)
+  TNT1 A 0 A_DropItem("LightRockets",1,80)
+  TNT1 A 0 A_DropItem("LightRockets",1,60)
+  Stop
+  }
+}
+
+
+
+
+ACTOR StandardCells : Ammo 
+{
+        Inventory.PickupMessage "Picked up some Standard Energy Cells."
+		Inventory.Amount 20
+		Inventory.MaxAmount 360
+		Ammo.BackpackAmount 40
+		Ammo.BackpackMaxAmount 720
+		Inventory.Icon "CELLB0"
+		Scale 0.7
+		+DROPPED
+		Translation "117:117=197:197"
+		States
+		{
+		Spawn:
+		CELL A -1
+		Stop
+		}
+}
+
+ACTOR HeavyCells : Ammo 
+{
+        Inventory.PickupMessage "Picked up some Heavy Energy Cells."
+		Inventory.Amount 1
+		Inventory.MaxAmount 1
+		Ammo.BackpackAmount 0
+		Ammo.BackpackMaxAmount 2
+		Inventory.Icon "CELPB0"
+		Scale 0.7
+		+DROPPED
+		Translation "160:167=112:127"
+		States
+		{
+		Spawn:
+		CELP A -1
+		Stop
+		}
+}
+
+		
+ACTOR Slot6AmmoBundle : CustomInventory 
+{
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_DropItem("StandardCells",20)
+  TNT1 A 0 A_DropItem("StandardCells",20,40)
+  //TNT1 A 0 A_DropItem("StandardCells",20,30)
+  Stop
+  }
+}
+
+ACTOR Slot7AmmoBundle : CustomInventory 
+{
+ States
+ {
+ Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_DropItem("StandardCells",20)
+  TNT1 A 0 A_DropItem("StandardCells",20)
+  TNT1 A 0 A_DropItem("StandardCells",20,90)
+  TNT1 A 0 A_DropItem("HeavyCells",1,60)
+  Stop
+  }
+}
+
+ACTOR CellSpawner : Randomspawner Replaces Cell
+{
+DropItem Slot6AmmoBundle,256
+}
+
+
+ACTOR CellPackSpawner : Randomspawner Replaces Cellpack
+{
+DropItem Slot7AmmoBundle,256
+}
+
+//////////////////////ARMOR///////////////////////////
+
+ACTOR GreenArmorSpawner : RandomSpawner Replaces GreenArmor
+{
+DropItem SecurityArmor,256,4
+DropItem MilitiaArmor,256,2
+}
+
+ACTOR BlueArmorSpawner : RandomSpawner Replaces BlueArmor
+{
+DropItem HeavyArmor,256,4
+DropItem MercenaryArmor,256,1
+}
+
+//armor balance used to be just different color = better (kinda)
+//initially, red armor (militia) was better than green armor, blue was better than red, but black armor (mercenary) was a sidegrade to blue armor
+//black armor had less durability, but you would straight up not feel attacks in return
+//decided to mimic that with the green armor spawns instead of red armor just being better than green armor. now it functions as a sidegrade,
+//more durability than green, less actual defense overall
+
+
+//probably rebalance armor (again)
+
+ACTOR ScoutArmor : GreenArmor //this is what you start with, perhaps make this rarely spawn on armor bonuses
+{
+  DamageFactor 0.60
+  Inventory.PickupMessage "Picked up a set of Scout Combat Armor."
+  Inventory.Icon "ARM5A0"
+  Armor.SavePercent 50
+  Armor.SaveAmount 75
+  Armor.MaxAbsorb 50
+  //Armor.MaxFullAbsorb 25
+  Translation "112:127=144:151"
+  States
+  {
+  Spawn:
+    ARM1 A 6
+    ARM1 B 7 Bright
+    Loop
+  }
+}
+
+ACTOR SecurityArmor : GreenArmor
+{
+  DamageFactor 0.50
+  Inventory.PickupMessage "Picked up a set of Security Combat Armor."
+  Inventory.Icon "ARM1A0"
+  Armor.SavePercent 60
+  Armor.SaveAmount 150
+  Armor.MaxAbsorb 60
+  //Armor.MaxFullAbsorb 30
+  States
+  {
+  Spawn:
+    ARM1 A 6
+    ARM1 B 7 Bright
+    Loop
+  }
+}
+
+ACTOR MilitiaArmor : GreenArmor
+{
+  DamageFactor 0.45
+  Inventory.PickupMessage "Picked up a set of Militia Combat Armor."
+  Inventory.Icon "ARM3A0" //probably could've been done via TEXTUREs translation instead of just recoloring a sprite but eh
+  Armor.SavePercent 65
+  Armor.SaveAmount 200
+  Armor.MaxAbsorb 45
+  //Armor.MaxFullAbsorb 25
+  Translation "112:127=176:191"
+  States
+  {
+  Spawn:
+    ARM1 A 6
+    ARM1 B 7 Bright
+    Loop
+  }
+}
+
+ACTOR HeavyArmor : BlueArmor
+{
+  DamageFactor 0.40
+  Inventory.PickupMessage "Picked up a set of Heavy Combat Armor."
+  Inventory.Icon "ARM2A0"
+  Armor.SavePercent 75
+  Armor.SaveAmount 350
+  Armor.MaxAbsorb 75
+  //Armor.MaxFullAbsorb 40
+  States
+  {
+  Spawn:
+    ARM2 A 6
+    ARM2 B 7 Bright
+    Loop
+  }
+}
+
+ACTOR MercenaryArmor : BlueArmor
+{
+  DamageFactor 0.30
+  Inventory.PickupMessage "Picked up a set of Mercenary Combat Armor."
+  Inventory.Icon "ARM4A0" //same story as the MediumArmor icon
+  Armor.SavePercent 80
+  Armor.SaveAmount 300
+  Armor.MaxAbsorb 80
+  Armor.MaxFullAbsorb 50
+  Translation "195:207=96:111", "240:247=110:111"
+  States
+  {
+  Spawn:
+    ARM2 A 6
+    ARM2 B 7 Bright
+    Loop
+  }
+}
+
+
+ACTOR ArmorPlate : ArmorBonus //GIVE OWN ACTIVATION SOUND
+{
+Inventory.PickupMessage "Picked up an Armor Plate."
+Armor.SaveAmount 25
+Armor.SavePercent 30
+Armor.MaxSaveAmount 500
+Armor.MaxBonusMax 500
+Armor.MaxAbsorb 15
+//Armor.MaxFullAbsorb 80
+//Damagefactor 0.4
+States
+{
+Spawn:
+  BON2 A -1 
+  Loop
+}
+}
+
+ACTOR FakeArmorPlate : Inventory 
+{
+Inventory.MaxAmount 4
+Inventory.Icon "BON2A0"
+Inventory.PickupMessage "Picked up an Armor Plate."
+//Inventory.PickupSound "misc/miscgrab"
+Inventory.InterHubAmount 4
++Inventory.Ignoreskill
+Scale 0.9 
+  States
+  {
+  Spawn:
+   BON2 AAAAAABCDCB 6
+    Loop
+  }
+}
+
+ACTOR ArmorPlateSpawner : RandomSpawner Replaces ArmorBonus
+{
+DropItem FakeArmorPlate,30
+}

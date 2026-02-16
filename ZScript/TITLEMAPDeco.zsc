@@ -1,0 +1,89 @@
+CLASS TitlePhobos : actor
+{
+	Default
+	{
+		+forcexybillboard;
+		+bright;
+		XScale 0.14;
+		YScale 0.168;
+		+rollsprite;
+		+nogravity;
+	}
+	States
+	{
+		Spawn:
+			PHBS A -1 NODELAY A_setroll(10);
+			WAIT;
+	
+	}
+
+}
+
+CLASS TitleMars : TitlePhobos
+{
+	Default
+	{
+		XScale 1.0;
+		Yscale 1.2;
+	}
+	States
+	{
+		Spawn:
+			PHBS B -1;
+			WAIT;
+	
+	}
+
+}
+
+CLASS TNTSHIPSPAWNER : actor
+{
+	Default
+	{
+		+noclip;
+		+nogravity;
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 A 70
+			{
+				If(random(0,12) == 1)
+				{
+					let ship = spawn("TNTSHIP",(pos.x, pos.y, frandom(200,320)));
+					If(ship)
+					{
+						Ship.angle = angle;
+					}
+				}
+			}
+			LOOP;
+	}
+
+}
+
+CLASS TNTSHIP : actor
+{
+	Default
+	{
+		+forcexybillboard;
+		+bright;
+		+rollsprite;
+		+nogravity;
+
+		+noclip;
+	}
+	States
+	{
+		Spawn:
+			PHBS C 2555 NODELAY
+			{
+				A_setscale(frandom(0.03,0.17));
+				Velfromangle(frandom(0.3,0.9));
+			}
+			STOP;
+	
+	}
+
+}

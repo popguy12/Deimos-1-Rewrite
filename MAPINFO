@@ -1,0 +1,16 @@
+Gameinfo 
+{
+	Playerclasses = "DeimosMarine"
+}
+
+map TITLEMAP "Title"
+{
+	music = D_NUTITL	
+}
+
+DoomEdNums
+{
+	26018 = TitlePhobos
+	26019 = TitleMars
+	26020 = TNTShipSpawner
+}

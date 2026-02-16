@@ -1,0 +1,852 @@
+height 0;
+monospacefonts true, "0";
+
+statusbar fullscreen, fullscreenoffsets // ZDoom HUD
+{
+    //health
+    //drawimage "MEDIA0", 20, -2, centerbottom;
+    //drawnumber 3, HUDFONT_DOOM, untranslated, health, drawshadow, 82, -20;
+
+//original idea was a singular giant + that changed colors to represent health
+//doom's fonts are too small tho, rip
+    
+	
+	IfHealth 1
+	{
+	//DrawString BIGFONT, Green, "+", 42, -20;
+	//DrawString BIGFONT, Green, "+", 32, -20;
+	//DrawString BIGFONT, Green, "+", 22, -20;
+	DrawString BIGFONT, Black, "+", 12, -20;
+	}
+	
+	IfHealth 20
+	{
+	//DrawString BIGFONT, Green, "+", 42, -20;
+	//DrawString BIGFONT, Green, "+", 32, -20;
+	//DrawString BIGFONT, Green, "+", 22, -20;
+	DrawString BIGFONT, Red, "+", 12, -20;
+	}
+	
+	IfHealth 40
+	{
+	//DrawString BIGFONT, Green, "+", 42, -20;
+	//DrawString BIGFONT, Green, "+", 32, -20;
+	DrawString BIGFONT, Orange, "+", 22, -20;
+	DrawString BIGFONT, Orange, "+", 12, -20;
+	}
+	
+	IfHealth 60
+	{
+	//DrawString BIGFONT, Green, "+", 42, -20;
+	DrawString BIGFONT, Yellow, "+", 32, -20;
+	DrawString BIGFONT, Yellow, "+", 22, -20;
+	DrawString BIGFONT, Yellow, "+", 12, -20;
+	}
+	
+	IfHealth 80
+	{
+	DrawString BIGFONT, Green, "+", 42, -20;
+	DrawString BIGFONT, Green, "+", 32, -20;
+	DrawString BIGFONT, Green, "+", 22, -20;
+	DrawString BIGFONT, Green, "+", 12, -20;
+	}
+	
+	IfHealth 120
+	{
+	//DrawString BIGFONT, LightBlue, "+", 42, -20;
+	//DrawString BIGFONT, LightBlue, "+", 32, -20;
+	//DrawString BIGFONT, LightBlue, "+", 22, -20;
+	DrawString BIGFONT, LightBlue, "+", 12, -20;
+	}
+	
+	IfHealth 140
+	{
+	//DrawString BIGFONT, Cyan, "+", 42, -20;
+	//DrawString BIGFONT, Cyan, "+", 32, -20;
+	DrawString BIGFONT, Cyan, "+", 22, -20;
+	DrawString BIGFONT, Cyan, "+", 12, -20;
+	}
+	
+	IfHealth 160
+	{
+	//DrawString BIGFONT, Blue, "+", 42, -20;
+	DrawString BIGFONT, Blue, "+", 32, -20;
+	DrawString BIGFONT, Blue, "+", 22, -20;
+	DrawString BIGFONT, Blue, "+", 12, -20;
+	}
+	
+	IfHealth 180
+	{
+	DrawString BIGFONT, Purple, "+", 42, -20;
+	DrawString BIGFONT, Purple, "+", 32, -20;
+	DrawString BIGFONT, Purple, "+", 22, -20;
+	DrawString BIGFONT, Purple, "+", 12, -20;
+	}
+	
+	IfHealth 200
+	{
+	DrawString BIGFONT, Gold, "+", 42, -20;
+	DrawString BIGFONT, Gold, "+", 32, -20;
+	DrawString BIGFONT, Gold, "+", 22, -20;
+	DrawString BIGFONT, Gold, "+", 12, -20;
+	}
+	
+	InInventory "PowerStrength", 1
+	{
+	DrawString BIGFONT, Red, "*", 52, -20;
+	}
+	
+	InInventory "BerserkSpeed", 1
+	{
+	DrawString BIGFONT, Red, "^", 52, -30;
+	}
+	
+	
+	//medical hud
+	IsSelected "PlayerMedical"
+	{
+	
+	 /*DrawImage "MEDIA0", -140, -2, centerbottom;
+	DrawNumber 2 ,SMALLFONT,White,"FakeMedKit",DrawShadow,-150,-10,0,DarkGray,0;
+	
+	DrawImage "STIMA0", -180, -2, centerbottom;
+	DrawNumber 2 ,SMALLFONT,White,"FakeStimpack",DrawShadow,-185,-10,0,DarkGray,0;
+	
+	DrawImage "BON2A0", -220, -2, centerbottom;
+	DrawNumber 2 ,SMALLFONT,White,"FakeArmorplate",DrawShadow,-225,-10,0,DarkGray,0;
+	
+	DrawImage "BON1A0", -260, -2, centerbottom;
+	DrawNumber 2 ,SMALLFONT,White,"FakeHealthPotion",DrawShadow,-265,-10,0,DarkGray,0; */
+	
+	//new medical hud test
+	
+	//medkits
+	InInventory "FakeMedKit", 1
+	{
+	DrawImage "MEDIA0", -140, -2, centerbottom;
+	}
+	
+	InInventory "FakeMedKit", 2
+	{
+	DrawImage "MEDIA0", -150, -2, centerbottom;
+	}
+	
+	//stimpacks
+	InInventory "FakeStimpack", 1
+	{
+	DrawImage "STIMA0", -180, -2, centerbottom;
+	}
+	
+	InInventory "FakeStimpack", 2
+	{
+	DrawImage "STIMA0", -185, -2, centerbottom;
+	}
+	
+	InInventory "FakeStimpack", 3
+	{
+	DrawImage "STIMA0", -190, -2, centerbottom;
+	}
+	
+	InInventory "FakeStimpack", 4
+	{
+	DrawImage "STIMA0", -195, -2, centerbottom;
+	}
+	
+	//armor plates
+	InInventory "FakeArmorplate", 1
+	{
+	DrawImage "BON2A0", -220, -2, centerbottom;
+	}
+	
+	InInventory "FakeArmorplate", 2
+	{
+	DrawImage "BON2A0", -225, -2, centerbottom;
+	}
+	
+	InInventory "FakeArmorplate", 3
+	{
+	DrawImage "BON2A0", -230, -2, centerbottom;
+	}
+	
+	InInventory "FakeArmorplate", 4
+	{
+	DrawImage "BON2A0", -235, -2, centerbottom;
+	}
+	
+	//health potions
+	InInventory "FakeHealthPotion", 1
+	{
+	DrawImage "BON1A0", -260, -2, centerbottom;
+	}
+	
+	InInventory "FakeHealthPotion", 2
+	{
+	DrawImage "BON1A0", -265, -2, centerbottom;
+	}
+	
+	InInventory "FakeHealthPotion", 3
+	{
+	DrawImage "BON1A0", -270, -2, centerbottom;
+	}
+	
+	InInventory "FakeHealthPotion", 4
+	{
+	DrawImage "BON1A0", -275, -2, centerbottom;
+	}
+	
+	InInventory "FakeBerserk", 1
+	{
+	DrawImage "PSTRA0", -100, -2, centerbottom;
+	}
+	
+	//Drop Mode Notif
+	InInventory "MedicalDrop"
+	{
+	DrawString SMALLFONT, Red, "Drop Mode Enabled", -100, -40,1,drawshadow;
+	}
+	
+}
+	
+	//experiment with dbigfont and smallfnt for hud warnings
+
+    //armor
+    drawimage armoricon, 20, -24, centerbottom;
+	drawmugshot 5, animatedgodmode | xdeathface, 50, -50;
+    drawnumber 3, SMALLFONT, White, armor, drawshadow, whennotzero, 32, -30;
+	
+	//DrawString DBIGFONT, Yellow, "####", -90, -35,2;//,drawshadow; //repurpose for ammo counters on hud
+	
+	InInventory "Ammocheck"
+	{
+	
+	IsSelected "DeimosHandgun"
+	 {
+	  
+	  InInventory "HandGunMagazine", 1
+	  {
+	  DrawString DBIGFONT, Black, "/", -130, -30,2;
+	  }
+	  
+	  InInventory "HandGunMagazine", 2
+	  {
+	  DrawString DBIGFONT, DarkGrey, "/", -130, -30,2;
+	  }
+	 
+	  InInventory "HandGunMagazine", 3
+	  {
+	  DrawString DBIGFONT, Grey, "/", -130, -30,2;
+	  }
+	  
+	  
+	  InInventory "HandGunMagazine", 4
+	  {
+	  DrawString DBIGFONT, Black, "/", -140, -30,2;
+	  }
+	  
+	  InInventory "HandGunMagazine", 5
+	  {
+	  DrawString DBIGFONT, DarkGrey, "/", -140, -30,2;
+	  }
+	 
+	  InInventory "HandGunMagazine", 6
+	  {
+	  DrawString DBIGFONT, Grey, "/", -140, -30,2;
+	  }
+	  
+	  
+	  InInventory "HandGunMagazine", 7
+	  {
+	  DrawString DBIGFONT, Black, "/", -150, -30,2;
+	  }
+	  
+	  InInventory "HandGunMagazine", 8
+	  {
+	  DrawString DBIGFONT, DarkGrey, "/", -150, -30,2;
+	  }
+	 
+	  InInventory "HandGunMagazine", 9
+	  {
+	  DrawString DBIGFONT, Grey, "/", -150, -30,2;
+	  }
+	 
+	 
+	  InInventory "HandGunMagazine", 10
+	  {
+	  DrawString DBIGFONT, Black, "/", -160, -30,2;
+	  }
+	  
+	  InInventory "HandGunMagazine", 11
+	  {
+	  DrawString DBIGFONT, DarkGrey, "/", -160, -30,2;
+	  }
+	 
+	  InInventory "HandGunMagazine", 12
+	  {
+	  DrawString DBIGFONT, Grey, "/", -160, -30,2;
+	  }
+	  
+	  
+	  InInventory "HandGunMagazine", 13
+	  {
+	  DrawString DBIGFONT, Black, "/", -170, -30,2;
+	  }
+	   
+	  InInventory "HandGunMagazine", 14
+	  {
+	  DrawString DBIGFONT, DarkGrey, "/", -170, -30,2;
+	  }
+	 
+	  InInventory "HandGunMagazine", 15
+	  {
+	  DrawString DBIGFONT, Grey, "/", -170, -30,2;
+	  }
+	 
+	 }
+	
+	//pump shotgun ammo tracker
+	IsSelected "DeimosShotgun" 
+	 {
+	 
+	 InInventory "SGRegTube", 1
+	  {
+	  DrawString DBIGFONT, Red, "I", -120, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 2
+	  {
+	  DrawString DBIGFONT, Red, "I", -130, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 3
+	  {
+	  DrawString DBIGFONT, Red, "I", -140, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 4
+	  {
+	  DrawString DBIGFONT, Red, "I", -150, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 5
+	  {
+	  DrawString DBIGFONT, Red, "I", -160, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 6
+	  {
+	  DrawString DBIGFONT, Red, "I", -170, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 7
+	  {
+	  DrawString DBIGFONT, Red, "I", -180, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 8
+	  {
+	  DrawString DBIGFONT, Red, "I", -190, -20,2;
+	  }
+	  
+	  InInventory "SGRegTube", 9 //in case ammo capacity gets buffed
+	  {
+	  DrawString DBIGFONT, Red, "I", -200, -20,2;
+	  }
+	  
+	  
+	  //dragons breath
+	  InInventory "SGDBTube", 1
+	  {
+	  DrawString DBIGFONT, Orange, "I", -120, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 2
+	  {
+	  DrawString DBIGFONT, Orange, "I", -130, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 3
+	  {
+	  DrawString DBIGFONT, Orange, "I", -140, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 4
+	  {
+	  DrawString DBIGFONT, Orange, "I", -150, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 5
+	  {
+	  DrawString DBIGFONT, Orange, "I", -160, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 6
+	  {
+	  DrawString DBIGFONT, Orange, "I", -170, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 7
+	  {
+	  DrawString DBIGFONT, Orange, "I", -180, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 8
+	  {
+	  DrawString DBIGFONT, Orange, "I", -190, -20,2;
+	  }
+	  
+	  InInventory "SGDBTube", 9 //in case ammo capacity gets buffed
+	  {
+	  DrawString DBIGFONT, Orange, "I", -200, -20,2;
+	  }
+	 
+	 }
+	 
+	 //SSG ammo tracker
+	 IsSelected "DeimosSSG"
+	 {
+	 
+	 //buckshot
+	 InInventory "SSGRegBarrel", 1
+	  {
+	  DrawString DBIGFONT, Red, "I", -160, -20,2;
+	  }
+	  
+	  InInventory "SSGRegBarrel", 2 
+	  {
+	  DrawString DBIGFONT, Red, "I", -170, -20,2;
+	  }
+	  
+	  
+	  //explosive slugs
+	  InInventory "SSGSlugBarrel", 1
+	  {
+	  DrawString DBIGFONT, Blue, "I", -160, -20,2;
+	  }
+	  
+	  InInventory "SSGSlugBarrel", 2 
+	  {
+	  DrawString DBIGFONT, Blue, "I", -170, -20,2;
+	  }
+	 
+	 }
+	
+	
+	//chaingun ammo tracker
+	IsSelected "DeimosChaingun" 
+	{
+	//bottom row
+	InInventory "ChaingunMagazine", 1
+	  {
+	  DrawString DBIGFONT, Orange, "#", -120, -20,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 6
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -120, -20,2;
+	  }
+	
+	
+	InInventory "ChaingunMagazine", 11
+	  {
+	  DrawString DBIGFONT, Orange, "#", -135, -20,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 16
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -135, -20,2;
+	  }
+	
+	
+	InInventory "ChaingunMagazine", 21
+	  {
+	  DrawString DBIGFONT, Orange, "#", -150, -20,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 26
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -150, -20,2;
+	  }
+	  
+	  
+	//top row
+	InInventory "ChaingunMagazine", 31
+	  {
+	  DrawString DBIGFONT, Orange, "#", -120, -35,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 36
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -120, -35,2;
+	  }
+	
+	
+	InInventory "ChaingunMagazine", 41
+	  {
+	  DrawString DBIGFONT, Orange, "#", -135, -35,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 46
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -135, -35,2;
+	  }
+	 
+	 
+	InInventory "ChaingunMagazine", 51
+	  {
+	  DrawString DBIGFONT, Orange, "#", -150, -35,2;
+	  }
+	
+	InInventory "ChaingunMagazine", 56
+	  {
+	  DrawString DBIGFONT, Yellow, "#", -150, -35,2;
+	  }
+	  
+	  //nade tracker
+	  InInventory "ChaingunNadeTube", 1
+	  {
+	  DrawString DBIGFONT, Grey, "X", -170, -20,2;
+	  }
+	  
+	}
+
+ //rocket launcher ammo tracker
+  IsSelected "DeimosLauncher"
+    {
+	  
+	  InInventory "LauncherTube", 2
+	    {
+		DrawString DBIGFONT, brown, "X", -200, -32,2;
+		}
+		
+		InInventory "LauncherTube", 1
+	    {
+		DrawString DBIGFONT, brown, "X", -215, -45,2;
+		}
+		
+		InInventory "LauncherTube", 3
+	    {
+		DrawString DBIGFONT, brown, "X", -185, -45,2;
+		}
+		
+		InInventory "LauncherTube", 4
+	    {
+		DrawString DBIGFONT, brown, "X", -200, -58,2;
+		}
+		
+		
+		InInventory "LightLauncherTube", 2
+	    {
+		DrawString DBIGFONT, Grey, "X", -200, -32,2;
+		}
+		
+		InInventory "LightLauncherTube", 1
+	    {
+		DrawString DBIGFONT, Grey, "X", -215, -45,2;
+		}
+		
+		InInventory "LightLauncherTube", 3
+	    {
+		DrawString DBIGFONT, Grey, "X", -185, -45,2;
+		}
+		
+		InInventory "LightLauncherTube", 4
+	    {
+		DrawString DBIGFONT, Grey, "X", -200, -58,2;
+		}
+	  
+	 }
+
+  //plasma rifle ammo tracker
+  IsSelected "DeimosPlasmaRifle"
+  {
+  
+      InInventory "PlasmaRifleBattery", 1
+	  {
+	  DrawString DBIGFONT, Blue, "<", -135, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 6
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -135, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 11
+	  {
+	  DrawString DBIGFONT, Blue, "<", -140, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 16
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -140, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 21
+	  {
+	  DrawString DBIGFONT, Blue, "<", -145, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 26
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -145, -20,2;
+	  }
+    
+      InInventory "PlasmaRifleBattery", 31
+	  {
+	  DrawString DBIGFONT, Blue, "<", -150, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 36
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -150, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 41
+	  {
+	  DrawString DBIGFONT, Blue, "<", -155, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 46
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -155, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 51
+	  {
+	  DrawString DBIGFONT, Blue, "<", -160, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 56
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -160, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 61
+	  {
+	  DrawString DBIGFONT, Blue, "<", -165, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 66
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -165, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 71
+	  {
+	  DrawString DBIGFONT, Blue, "<", -170, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 76
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -170, -20,2;
+	  }
+     
+      InInventory "PlasmaRifleBattery", 81
+	  {
+	  DrawString DBIGFONT, Blue, "<", -175, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 86
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -175, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 91
+	  {
+	  DrawString DBIGFONT, Blue, "<", -180, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 96
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -180, -20,2;
+	  }
+  
+      InInventory "PlasmaRifleBattery", 101
+	  {
+	  DrawString DBIGFONT, Blue, "<", -185, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 106
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -185, -20,2;
+	  }
+  
+	  InInventory "PlasmaRifleBattery", 111
+	  {
+	  DrawString DBIGFONT, Blue, "<", -190, -20,2;
+	  }
+	  InInventory "PlasmaRifleBattery", 116
+	  {
+	  DrawString DBIGFONT, Cyan, "<", -190, -20,2;
+	  }
+  
+  }
+  
+  //bfg ammo tracker
+  IsSelected "BFG9k"
+  {
+  
+     InInventory "BFGBattery", 10
+	  {
+	  DrawString DBIGFONT, Green, "O", -120, -20,2;
+	  }
+	  
+	 InInventory "BFGBattery", 20
+	  {
+	  DrawString DBIGFONT, Green, "O", -120, -35,2;
+	  }
+	  
+	  InInventory "BFGBattery", 30
+	  {
+	  DrawString DBIGFONT, Green, "O", -120, -50,2;
+	  }
+	  
+	  
+	  InInventory "BFGBattery", 40
+	  {
+	  DrawString DBIGFONT, Green, "O", -140, -20,2;
+	  }
+	  
+	 InInventory "BFGBattery", 50
+	  {
+	  DrawString DBIGFONT, Green, "O", -140, -35,2;
+	  }
+	  
+	  InInventory "BFGBattery", 60
+	  {
+	  DrawString DBIGFONT, Green, "O", -140, -50,2;
+	  }
+  
+  }
+  
+  
+  
+}
+
+
+//total ammo checker
+   InInventory "AmmoCheck" 
+   {
+   
+   drawimage "CLIPB0", -14, -5, centerbottom;
+   drawnumber 3, INDEXFONT, Grey, "LowCalBullets", drawshadow, -25, -15,0,Black,0;
+   
+   drawimage "SHELA0", -14, -20, centerbottom;
+   drawnumber 3, INDEXFONT, Red, "StandardShells", drawshadow, -27, -27,0,Black,0;
+   
+   drawimage "SHELB0", -14, -35, centerbottom;
+   drawnumber 3, INDEXFONT, Orange, "DragonsBreathShells", drawshadow, -27, -42,0,Black,0;
+   
+   drawimage "SHELC0", -14, -50, centerbottom;
+   drawnumber 3, INDEXFONT, Blue, "ExplosiveSlugShells", drawshadow, -27, -57,0,Black,0;
+   
+   drawimage "AMMOB0", -14, -65, centerbottom;
+   drawnumber 3, INDEXFONT, Yellow, "HighCalBullets", drawshadow, -30, -75,0,Black,0;
+   
+   drawimage "ROCKB0", -14, -85, centerbottom;
+   drawnumber 3, INDEXFONT, DarkGrey, "LightRockets", drawshadow, -27, -100,0,Black,0;
+   
+   drawimage "ROCKA0", -14, -115, centerbottom;
+   drawnumber 3, INDEXFONT, Brown, "StandardRockets", drawshadow, -27, -130,0,Black,0;
+   
+   drawimage "CELLB0", -14, -150, centerbottom;
+   drawnumber 3, INDEXFONT, Cyan, "StandardCells", drawshadow, -27, -158,0,Black,0;
+   
+   drawimage "CELPB0", -14, -170, centerbottom;
+   drawnumber 3, INDEXFONT, Green, "HeavyCells", drawshadow, -34, -182,0,Black,0;
+   
+   }
+
+//zdoom ammo counter, WE AREN'T USING THIS
+   
+   
+   //ammo
+  /*  drawimage ammoicon1, -14, -4, centerbottom;
+    drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, drawshadow, -25, -20;
+   
+   
+   usesammo
+    {
+        //secondary ammo and inventory
+        usessecondaryammo
+        {
+            drawimage ammoicon2, -14, -22, centerbottom;
+            drawnumber 3, HUDFONT_DOOM, untranslated, ammo2, drawshadow, -25, -38;
+            inventorybarnotvisible
+            {
+                drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, HUDFONT_DOOM, -14, -39, -26, -56, untranslated;
+            }
+        }
+        //no secondary ammo
+        usessecondaryammo not
+        {
+            inventorybarnotvisible
+            {
+                drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, HUDFONT_DOOM, -14, -21, -26, -38, untranslated;
+            }
+        }
+    }
+    
+    // no ammo but inventory
+    usesammo not
+    {
+        inventorybarnotvisible
+        {
+            drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, HUDFONT_DOOM, -14, -3, -26, -20, untranslated;
+        }
+    } //*/
+
+    gamemode deathmatch
+    {
+        drawnumber 2, HUDFONT_DOOM, untranslated, frags, drawshadow, -3, 1;
+    }
+    gamemode singleplayer, cooperative, teamgame
+    {
+        drawkeybar 6, vertical, reverserows, auto, -10, 2, 0, 3, auto;
+    }
+}
+
+statusbar normal // Standard Doom Status bar, probably convert to "hudless"
+{
+  /*  drawimage "STBAR", 0, 168;
+    drawimage "STTPRCNT", 90, 171;
+    drawimage "STTPRCNT", 221, 171;
+    drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, 44, 171;
+    drawnumber 3, HUDFONT_DOOM, untranslated, health, 90, 171;
+    drawnumber 3, HUDFONT_DOOM, untranslated, armor, 221, 171;
+
+    //keys
+    drawswitchableimage keyslot 2 && 5, "nullimage", "STKEYS0", "STKEYS3", "STKEYS6", 239, 171;
+    drawswitchableimage keyslot 3 && 6, "nullimage", "STKEYS1", "STKEYS4", "STKEYS7", 239, 181;
+    drawswitchableimage keyslot 1 && 4, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", 239, 191;
+
+    drawnumber 3, INDEXFONT, gold, ammo Clip, 288, 173;
+    drawnumber 3, INDEXFONT, gold, ammo Shell, 288, 179;
+    drawnumber 3, INDEXFONT, gold, ammo RocketAmmo, 288, 185;
+    drawnumber 3, INDEXFONT, gold, ammo Cell, 288, 191;
+
+    drawnumber 3, INDEXFONT, gold, ammocapacity Clip, 314, 173;
+    drawnumber 3, INDEXFONT, gold, ammocapacity Shell, 314, 179;
+    drawnumber 3, INDEXFONT, gold, ammocapacity RocketAmmo, 314, 185;
+    drawnumber 3, INDEXFONT, gold, ammocapacity Cell, 314, 191;
+    gamemode deathmatch, teamgame
+    {
+        drawnumber 2, HUDFONT_DOOM, untranslated, frags, 138, 171;
+    }
+    gamemode cooperative, singleplayer
+    {
+        drawimage "STARMS", 104, 168;
+        drawswitchableimage weaponslot 2, "STGNUM2", "STYSNUM2", 111, 172; 
+        drawswitchableimage weaponslot 3, "STGNUM3", "STYSNUM3", 123, 172;
+        drawswitchableimage weaponslot 4, "STGNUM4", "STYSNUM4", 135, 172;
+        drawswitchableimage weaponslot 5, "STGNUM5", "STYSNUM5", 111, 182;
+        drawswitchableimage weaponslot 6, "STGNUM6", "STYSNUM6", 123, 182;
+        drawswitchableimage weaponslot 7, "STGNUM7", "STYSNUM7", 135, 182;
+    }
+    gamemode cooperative, deathmatch, teamgame
+    {
+        drawimage translatable "STFBANY", 144, 169;
+    }
+    drawselectedinventory alternateonempty, INDEXFONT, 143, 168
+    {
+        drawmugshot 5, 143, 168;
+    } */
+}
+
+statusbar inventory // Standard bar overlay (ZDoom Addition)
+{
+    drawinventorybar Doom, 7, INDEXFONT, 50, 170;
+}
+
+statusbar inventoryfullscreen // ZDoom HUD overlay.
+{
+    drawinventorybar Doom, translucent, 7, INDEXFONT, 50, 170;
+}

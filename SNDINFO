@@ -1,0 +1,42 @@
+
+weapons/shgnfire "sounds/shotgunpew"
+weapons/shgnpump "sounds/shotgunpump"
+weapons/ssgnfire "sounds/supershotgunpew.ogg"
+weapons/AssaultCannonFire "sounds/chaincannonpew.ogg"
+weapons/oldRocketfire "sounds/rocketpew.ogg"
+weapons/Plasma2 "sounds/plasmapew.ogg"
+weapons/ssgr4 "sounds/ssgr4.ogg"
+weapons/ssgr2 "sounds/ssgr2.ogg"
+weapons/ssgr5 "sounds/ssgr5.ogg"
+weapons/bfgfire "sounds/bfgpew.ogg"
+
+weapons/empty "sounds/empty"
+
+weapons/gatfire "sounds/hggatfire"
+weapons/hgmagout "sounds/hgmagout"
+weapons/hgmagin "sounds/hgmagin"
+weapons/hgslide "sounds/hgslide"
+
+
+weapons/sgfire "sounds/sgfire"
+weapons/sgpumpback "sounds/sgpumpback"
+weapons/sgpumpforward "sounds/sgpumpforward"
+
+weapons/shellinsert "sounds/shellinsert"
+
+weapons/ssgfire "sounds/ssgfire" //rework
+weapons/ssgopen "sounds/ssgopen"
+weapons/ssgclose "sounds/ssgclose"
+
+weapons/cgfire "sounds/cgfire2"
+weapons/cgmagout "sounds/cgmagout"
+weapons/cgmagin "sounds/cgmagin"
+weapons/cgbolt "sounds/cgbolt"
+
+weapons/rocketfire "sounds/rocketfire"
+weapons/rocketload "sounds/rocketload"
+
+weapons/plasmafire "sounds/plasmafire"
+weapons/precisionplasmafire "sounds/precisionplasmafire"
+weapons/batteryout "sounds/batteryout"
+weapons/batteryin "sounds/batteryin"
