@@ -1,0 +1,427 @@
+ACTOR DeimosPlasmaRifle : DeimosWeapon replaces PlasmaRifle
+{
+Weapon.SelectionOrder 1600
+Inventory.PickupMessage "Acquired a Plasma Rifle!"
+Weapon.AmmoType1 "PlasmaRifleBattery"
+Weapon.AmmoType2 "StandardCells"
+Weapon.AmmoUse 1
+Weapon.AmmoGive2 60
+Weapon.SlotNumber 6
+-WEAPON.NOAUTOFIRE
+Tag "UAC VER Mk.1"
+States
+{
+Spawn:
+PLAS A -1
+Stop
+Ready:
+PLSG A 0 A_JumpIf(getplayerinput(input_buttons) & bt_speed, "Movement")
+PLSG A 0 A_SetSpeed(0.6)
+PLSG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM)
+PLSG A 0 A_SetCrosshair(34)
+Loop
+Select:
+PLSG A 1 A_Raise(12)
+Loop
+Deselect:
+TNT1 A 0 A_SetCrosshair(98)
+PLSG A 1 A_Lower(14)
+Loop
+
+Zoom:
+TNT1 A 0 A_JumpIfInventory("PRFireMode",1,"ModeSwitch")
+TNT1 A 0 A_GiveInventory("PRFireMode",1)
+TNT1 A 0 A_StartSound("weapons/empty",CHAN_AUTO)
+PLSG A 5 A_Log("Plasma Rifle Alternate-Fire set to Spread.")
+Goto Ready
+ModeSwitch:
+TNT1 A 0 A_TakeInventory("PRFireMode",1)
+TNT1 A 0 A_StartSound("weapons/empty",CHAN_AUTO)
+PLSG A 5 A_Log("Plasma Rifle Alternate-Fire set to Precision.")
+Goto Ready
+
+Fire:
+TNT1 A 0 A_JumpIfInventory("PlasmaRifleBattery", 1,1)
+Goto Empty
+TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "CrouchedFire")
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/plasmafire")
+PLSG A 1 A_FireCustomMissile("AltPlasmaBall")
+PLSG A 0 A_SetPitch(pitch-Random(1,2))
+TNT1 A 0 A_SetAngle(angle+Random(-1,1))
+PLSG A 1 Offset(0,50)
+PLSG A 1 Offset(0,55)
+PLSG A 0 Offset(0,45)
+PLSG A 0
+PLSG A 0 A_Refire
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+CrouchedFire:
+TNT1 A 0 A_JumpIfInventory("PlasmaRifleBattery", 1,1)
+Goto Empty
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/plasmafire")
+PLSG A 1 A_FireCustomMissile("AltPlasmaBall")
+PLSG A 0 A_SetPitch(pitch-1.4)
+PLSG A 1 Offset(0,50)
+PLSG A 1 Offset(0,55)
+PLSG A 0 Offset(0,45)
+PLSG A 0
+PLSG A 0 A_Refire
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+
+AltFire:
+TNT1 A 0 A_JumpIfInventory("PlasmaRifleBattery", 8,1)
+Goto Empty
+TNT1 A 0
+TNT1 A 0 A_JumpIfInventory("PRFireMode",1,"Spread")
+Precision:
+TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "CrouchedPrecision")
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/precisionplasmafire",CHAN_AUTO)
+PLSG A 1 A_FireCustomMissile("PrecisionPlasmaBall",0,0)
+TNT1 A 0 A_TakeInventory("PlasmaRifleBattery",8)
+TNT1 A 0 A_SetPitch(pitch-9.5)
+TNT1 A 0 A_SetAngle(angle+Random(-4,4))
+TNT1 A 0 A_Quake(10,5,0,6,"")
+PLSG A 1 Offset(0,50) A_SetPitch(pitch-2,SPF_INTERPOLATE)
+PLSG A 1 Offset(0,55) A_SetPitch(pitch-1.5,SPF_INTERPOLATE)
+PLSG A 0 Offset(0,45) A_SetPitch(pitch-1,SPF_INTERPOLATE)
+PLSG A 12
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+CrouchedPrecision:
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/precisionplasmafire",CHAN_AUTO)
+PLSG A 1 A_FireCustomMissile("PrecisionPlasmaBall",0,0)
+TNT1 A 0 A_TakeInventory("PlasmaRifleBattery",8)
+TNT1 A 0 A_SetPitch(pitch-6.5)
+TNT1 A 0 A_SetAngle(angle+Random(-2,2))
+TNT1 A 0 A_Quake(7,4,0,6,"")
+PLSG A 1 Offset(0,50) A_SetPitch(pitch-1.2,SPF_INTERPOLATE)
+PLSG A 1 Offset(0,55) A_SetPitch(pitch-0.7,SPF_INTERPOLATE)
+PLSG A 0 Offset(0,45) A_SetPitch(pitch-0.4,SPF_INTERPOLATE)
+PLSG A 12
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+
+Spread:
+TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "CrouchedSpread")
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/precisionplasmafire",CHAN_AUTO) //maaaaybe have different sound
+PLSG A 1 
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+TNT1 A 0 A_TakeInventory("PlasmaRifleBattery",8)
+TNT1 A 0 A_SetPitch(pitch-7.5)
+TNT1 A 0 A_SetAngle(angle+Random(-3,3))
+TNT1 A 0 A_Quake(8,5,0,6,"")
+PLSG A 1 Offset(0,50) A_SetPitch(pitch-2,SPF_INTERPOLATE)
+PLSG A 1 Offset(0,55) A_SetPitch(pitch-1.5,SPF_INTERPOLATE)
+PLSG A 0 Offset(0,45) A_SetPitch(pitch-1,SPF_INTERPOLATE)
+PLSG A 12
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+CrouchedSpread:
+PLSG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+PLSG A 0 A_PlaySound ("weapons/precisionplasmafire",CHAN_AUTO) 
+PLSG A 1 
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+PLSG A 0 A_FireCustomMissile("SpreadPlasmaBall",Random(-3,3),0,0,0,0,Random(-2,2))
+TNT1 A 0 A_TakeInventory("PlasmaRifleBattery",8)
+TNT1 A 0 A_SetPitch(pitch-5.5)
+TNT1 A 0 A_SetAngle(angle+Random(-2,2))
+TNT1 A 0 A_Quake(5,4,0,6,"")
+PLSG A 1 Offset(0,50) A_SetPitch(pitch-1.2,SPF_INTERPOLATE)
+PLSG A 1 Offset(0,55) A_SetPitch(pitch-0.7,SPF_INTERPOLATE)
+PLSG A 0 Offset(0,45) A_SetPitch(pitch-0.4,SPF_INTERPOLATE)
+PLSG A 12
+PLSG A 1 Offset(0,40)
+PLSG A 1 Offset(0,38)
+PLSG A 1 Offset(0,36)
+PLSG A 1 Offset(0,34)
+Goto Ready
+
+Flash:
+PLSF AB 2 BRIGHT A_Light2 
+TNT1 A 1 A_Light0
+Goto LightDone
+
+Reload: 
+  TNT1 A 0 A_SetCrosshair(98)
+  PLSG A 6
+  TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckAmmo") 
+  PLSG A 0 A_JumpIfInventory("PlasmaRifleBattery", 120, "Ready")
+  PLSG A 0 A_JumpIfInventory("StandardCells", 1, "ReloadWork")
+  Goto Ready
+ ReloadWork: 
+  PLSG A 0 
+  "####" A 0 A_OverlayPivotAlign(PSP_WEAPON,PSPA_RIGHT,PSPA_BOTTOM)
+  "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,62,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,62,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 30 A_StartSound("weapons/batteryout",CHAN_AUTO) 
+ ReloadLoop: 
+  PLSG A 0 A_JumpIfInventory("PlasmaRifleBattery",120,"ReloadFinish")
+  "####" A 0 A_JumpIfInventory("StandardCells",1,1)
+  Goto ReloadFinish
+  "####" A 0 A_TakeInventory("StandardCells", 1)
+  "####" A 0 A_GiveInventory("PlasmaRifleBattery", 1) 
+  Loop
+ ReloadFinish: 
+  PLSG A 1 A_WeaponOffset(6,58,WOF_INTERPOLATE)
+  "####" A 5 A_PlaySound("weapons/batteryin",CHAN_AUTO) 
+  "####" A 12
+  "####" A 0
+  "####" A 7 A_WeaponOffset(8,54,WOF_INTERPOLATE) 
+  "####" A 2 A_WeaponOffset(4,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 2 A_WeaponOffset(1,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,38,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,36,WOF_INTERPOLATE) //maybe tweak
+  "####" A 1 A_WeaponOffset(0,37,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,32,WOF_INTERPOLATE)
+  goto Ready
+   
+   CheckAmmo:
+   PLSG A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 0 A_GiveInventory("AmmoCheck")
+   CheckLoop:
+   PLSG A 1
+   TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckLoop")
+   TNT1 A 0 A_TakeInventory("AmmoCheck")
+   CheckFinish:
+   PLSG A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   Goto Ready
+   
+	Empty:
+	PLSG A 5 A_StartSound("weapons/empty",CHAN_AUTO)
+	Goto Ready
+ 
+}
+}
+
+Actor PlasmaRifleBattery : Ammo
+{
+		Inventory.Amount 1 
+		Inventory.MaxAmount 120
+		Ammo.BackPackAmount 0 
+		Ammo.BackPackMaxAmount 120
+		+INVENTORY.IGNORESKILL 
+}
+
+ACTOR PRFireMode : Inventory
+{
+Inventory.MaxAMount 1
+}
+
+ACTOR AltPlasmaBall : FastProjectile
+{
+  Radius 13
+  Height 8
+  Speed 320
+  Damage (Random(50,75))
+  Projectile
+  +RANDOMIZE
+  +ZDOOMTRANS
+  //donthurtshooter
+  RenderStyle Add
+  Alpha 0.75
+  DeathSound "weapons/plasmax"
+  Obituary "%o was melted by %k's plasma repeater."
+  Decal "PlasmaScorch"
+  MissileType "PlasmaTrail"
+  States
+  {
+  Spawn:
+    PLSS AB 4 Bright
+    Loop
+  Death:
+    TNT1 A 0
+	TNT1 A 0 A_Explode(10,50,0)
+    PLSE ABCDE 4 Bright
+    Stop
+  }
+}
+
+ACTOR SpreadPlasmaBall : FastProjectile
+{
+  Radius 13
+  Height 8
+  Speed 320
+  Damage (Random(20,30))
+  Projectile
+  +RANDOMIZE
+  +ZDOOMTRANS
+  +RIPPER
+  +NOBOSSRIP
+  //donthurtshooter
+  RenderStyle Add
+  Alpha 0.75
+  DeathSound "weapons/plasmax"
+  Obituary "%o was melted by %k's plasma repeater."
+  Decal "PlasmaScorch"
+  MissileType "PlasmaTrail"
+  States
+  {
+  Spawn:
+    PLSS AB 4 Bright
+    Loop
+  Death:
+    TNT1 A 0
+	TNT1 A 0 A_Explode(10,50,0)
+    PLSE ABCDE 4 Bright
+    Stop
+  }
+}
+
+ACTOR PlasmaTrail
+{
+  Radius 13
+  Height 8
+  Speed 100
+  Damage 0
+  Projectile
+  +RANDOMIZE
+  +ZDOOMTRANS
+  RenderStyle Add
+  Alpha 0.75
+  DeathSound "weapons/plasmax"
+  Obituary "%o was melted by %k's plasma repeater."
+  Decal "PlasmaScorch"
+  Scale 0.5
+  States
+  {
+  Spawn:
+    TNT1 A 0
+	TNT1 A 0 A_SpriteOffset(0,-4)
+    PLSE DDE 1 Bright
+    Stop
+  }
+}
+
+ACTOR PrecisionPlasmaBall : FastProjectile
+{
+  Radius 13
+  Height 8
+  Speed 280
+ // Damage (650) //damage before i decided to make this a ripper
+  Damage (Random(175,200))
+  Projectile
+  +RANDOMIZE
+  +ZDOOMTRANS
+  +RIPPER
+  +NOBOSSRIP
+  RenderStyle Add
+  Alpha 0.75
+  DeathSound "weapons/plasmax"
+  Obituary "%o was melted by %k's plasma repeater."
+  Decal "PlasmaScorch"
+  MissileType "PrecisionPlasmaTrail"
+  States
+  {
+  Spawn:
+    PLSS AB 6 Bright
+    Loop
+  Death:
+    TNT1 A 0 A_Explode(30,80,0)
+	TNT1 A 0 A_ChangeVelocity(20,0,0,CVF_RELATIVE,AAPTR_TRACER)
+    PLSE ABCDE 4 Bright
+    Stop
+  }
+}
+
+ACTOR PrecisionPlasmaTrail
+{
+  Radius 13
+  Height 8
+  Speed 100
+  Damage 0
+  Projectile
+  +RANDOMIZE
+  +ZDOOMTRANS
+  RenderStyle Add
+  Alpha 0.75
+  DeathSound "weapons/plasmax"
+  Obituary "%o was melted by %k's plasma repeater."
+  Decal "PlasmaScorch"
+  Scale 0.8
+  States
+  {
+  Spawn:
+    TNT1 A 0
+	TNT1 A 0 A_SpriteOffset(0,-7)
+    PLSE AB 2 Bright
+	{
+	A_SpawnParticle(Cyan, SPF_FULLBRIGHT, 35, Random(5,7),0,0,0,0,Random(-2,2),Random(-2,2),Random(-2,2));
+	A_SpawnParticle(LightBlue, SPF_FULLBRIGHT, 35, Random(5,7),0,0,0,0,Random(-2,2),Random(-2,2),Random(-2,2));
+	A_SpawnParticle(Blue, SPF_FULLBRIGHT, 35, Random(5,7),0,0,0,0,Random(-2,2),Random(-2,2),Random(-2,2));
+	}
+	PLSE CDE 2 Bright 
+    Stop
+  }
+}

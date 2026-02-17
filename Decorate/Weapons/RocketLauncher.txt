@@ -1,0 +1,372 @@
+//NOT TODAY, CLOSET FULL OF REVENANTS
+ACTOR DeimosLauncher : DeimosWeapon replaces RocketLauncher
+{
+Weapon.SelectionOrder 2500
+Inventory.PickupMessage "Grabbbed a Rocket Launcher!"
+Weapon.AmmoType1 "LauncherTube"
+Weapon.AmmoType2 "StandardRockets"
+Weapon.AmmoUse 1
+Weapon.AmmoGive2 4
+Weapon.SlotNumber 5
+Tag "UAC PAL"
+States
+{
+Spawn:
+LAUN A -1
+Stop
+Ready:
+MISG A 0 A_JumpIf(getplayerinput(input_buttons) & bt_speed, "Movement")
+MISG A 0 A_SetSpeed(0.5)
+MISG A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM)
+MISG A 0 A_SetCrosshair(77)
+Loop
+Select:
+MISG A 1 A_Raise(10)
+Loop
+Deselect:
+TNT1 A 0 A_SetCrosshair(98)
+MISG A 1 A_Lower(10)
+Loop
+Fire:
+TNT1 A 0 A_JumpIfInventory("LightLauncherTube", 1,"LightFire")
+TNT1 A 0 A_JumpIfInventory("LauncherTube", 1,1)
+Goto Empty
+TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "CrouchedFire")
+MISG A 0 A_GunFlash
+TNT1 A 0 A_AlertMonsters
+MISG A 0 A_Playsound ("weapons/RocketFire",CHAN_AUTO)
+MISG A 1 A_FireCustomMissile("StandardRocketMissile")
+TNT1 A 0 A_SetPitch(pitch-Random(7,10))
+TNT1 A 0 A_SetAngle(angle+Random(-4,4))
+TNT1 A 0 A_Quake(8,4,0,6,"nothin")
+MISG A 7 Offset(0,50)
+MISG A 4 Offset(0,45)
+MISG A 4 Offset(0,40)
+MISG A 0
+Goto Ready
+CrouchedFire:
+TNT1 A 0 A_JumpIfInventory("LauncherTube", 1,1)
+Goto Empty
+MISG A 0 A_GunFlash
+TNT1 A 0 A_AlertMonsters
+MISG A 0 A_Playsound ("weapons/RocketFire",CHAN_AUTO)
+MISG A 1 A_FireCustomMissile("StandardRocketMissile")
+TNT1 A 0 A_SetPitch(pitch-Random(6,7))
+TNT1 A 0 A_SetAngle(angle+Random(-2,2))
+TNT1 A 0 A_Quake(5,4,0,6,"nothin")
+MISG A 7 Offset(0,50)
+MISG A 4 Offset(0,45)
+MISG A 4 Offset(0,40)
+MISG A 0
+Goto Ready
+Flash:
+MISF ABCD 2 BRIGHT A_Light2 
+TNT1 A 1 A_Light0
+Goto LightDone
+
+LightFire:
+TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "LightCrouchedFire")
+MISG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_TakeInventory("LightLauncherTube",1)
+MISG A 0 A_Playsound ("weapons/RocketFire",CHAN_AUTO)
+MISG A 1 A_FireCustomMissile("LightRocketNade")
+TNT1 A 0 A_SetPitch(pitch-Random(5,7))
+TNT1 A 0 A_SetAngle(angle+Random(-3,3))
+TNT1 A 0 A_Quake(6,4,0,6,"nothin")
+MISG A 7 Offset(0,50)
+MISG A 4 Offset(0,45)
+MISG A 4 Offset(0,40)
+MISG A 0
+Goto Ready
+LightCrouchedFire:
+MISG A 0 A_GunFlash 
+TNT1 A 0 A_AlertMonsters
+TNT1 A 0 A_TakeInventory("LightLauncherTube",1)
+MISG A 0 A_Playsound ("weapons/RocketFire",CHAN_AUTO)
+MISG A 1 A_FireCustomMissile("LightRocketNade")
+TNT1 A 0 A_SetPitch(pitch-Random(3,5))
+TNT1 A 0 A_SetAngle(angle+Random(-1,1))
+TNT1 A 0 A_Quake(4,4,0,6,"nothin")
+MISG A 7 Offset(0,50)
+MISG A 4 Offset(0,45)
+MISG A 4 Offset(0,40)
+MISG A 0
+Goto Ready
+
+Reload: 
+  TNT1 A 0 A_SetCrosshair(98)
+  MISG A 6
+  TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckAmmo") 
+  MISG A 0 A_JumpIfInventory("LightLauncherTube",1,"Empty")
+  MISG A 0 A_JumpIfInventory("LauncherTube", 4, "Ready")
+  MISG A 0 A_JumpIfInventory("StandardRockets", 1, "ReloadWork")
+  Goto Ready
+ ReloadWork: 
+  MISG A 0 
+  "####" A 0 A_OverlayPivotAlign(PSP_WEAPON,PSPA_RIGHT,PSPA_BOTTOM)
+  "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 30 A_StartSound("weapons/batteryout",CHAN_AUTO) 
+ ReloadLoop: 
+  MISG A 0 A_JumpIfInventory("LauncherTube",4,"ReloadFinish")
+  "####" A 0 A_JumpIfInventory("StandardRockets",1,1)
+  Goto ReloadFinish
+  "####" A 1 A_WeaponOffset(7,54,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+  "####" A 2 A_WeaponOffset(9,50,WOF_INTERPOLATE)
+  "####" A 0 A_PlaySound("weapons/rocketload",CHAN_AUTO)
+  "####" A 0 A_TakeInventory("StandardRockets", 1)
+  "####" A 0 A_GiveInventory("LauncherTube", 1) 
+  "####" A 1 A_WeaponOffset(8,50,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(7,52,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 8 A_Refire("ReloadFinish")
+  Loop
+ ReloadFinish: 
+  MISG A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0
+  "####" A 7 A_WeaponOffset(8,54,WOF_INTERPOLATE) 
+  "####" A 2 A_WeaponOffset(4,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 2 A_WeaponOffset(1,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,38,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,32,WOF_INTERPOLATE)
+  goto Ready
+  
+  Zoom: //alt reload
+  TNT1 A 0 A_SetCrosshair(98)
+  MISG A 6
+  TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckAmmo") 
+  MISG A 0 A_JumpIfInventory("LauncherTube",1,"Empty")
+  MISG A 0 A_JumpIfInventory("LightLauncherTube", 4, "Ready")
+  MISG A 0 A_JumpIfInventory("LightRockets", 1, "LightReloadWork")
+  Goto Ready
+ LightReloadWork: 
+  MISG A 0 
+  "####" A 0 A_OverlayPivotAlign(PSP_WEAPON,PSPA_RIGHT,PSPA_BOTTOM)
+  "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,2,WOF_ADD)
+  "####" A 20 A_StartSound("weapons/batteryout",CHAN_AUTO) 
+ LightReloadLoop: 
+  MISG A 0 A_JumpIfInventory("LightLauncherTube",4,"LightReloadFinish")
+  "####" A 0 A_JumpIfInventory("LightRockets",1,1)
+  Goto ReloadFinish
+  "####" A 1 A_WeaponOffset(7,54,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(9,50,WOF_INTERPOLATE)
+  "####" A 0 A_PlaySound("weapons/rocketload",CHAN_AUTO)
+  "####" A 0 A_TakeInventory("LightRockets", 1)
+  "####" A 0 A_GiveInventory("LightLauncherTube", 1) 
+  "####" A 1 A_WeaponOffset(8,50,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(7,52,WOF_INTERPOLATE)
+  Loop
+ LightReloadFinish: 
+  MISG A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0
+  "####" A 7 A_WeaponOffset(8,54,WOF_INTERPOLATE) 
+  "####" A 2 A_WeaponOffset(4,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 2 A_WeaponOffset(1,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-2,WOF_ADD)
+  "####" A 1 A_WeaponOffset(0,38,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+  "####" A 1 A_WeaponOffset(0,32,WOF_INTERPOLATE)
+  goto Ready
+  
+  CheckAmmo:
+   MISG A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 0 A_GiveInventory("AmmoCheck")
+   CheckLoop:
+   MISG A 1
+   TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckLoop")
+   TNT1 A 0 A_TakeInventory("AmmoCheck")
+   CheckFinish:
+   MISG A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   Goto Ready
+   
+	Empty:
+	MISG A 5 A_StartSound("weapons/empty",CHAN_AUTO)
+	Goto Ready
+
+}
+}
+
+
+
+Actor LauncherTube : Ammo
+{
+		Inventory.Amount 1 
+		Inventory.MaxAmount 4
+		Ammo.BackPackAmount 0 
+		Ammo.BackPackMaxAmount 4
+		+INVENTORY.IGNORESKILL 
+}
+
+Actor LightLauncherTube : Ammo
+{
+		Inventory.Amount 1 
+		Inventory.MaxAmount 4
+		Ammo.BackPackAmount 0 
+		Ammo.BackPackMaxAmount 4
+		+INVENTORY.IGNORESKILL 
+}
+
+ACTOR StandardRocketMissile
+{
+  Radius 6
+  Height 4
+  Speed 200
+  Damage (Random(350,420))
+  Projectile
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  +FORCERADIUSDMG
+  DeathSound "" //"weapons/rocklx"
+  Decal "BigScorch"
+  Obituary "$OB_MPROCKET" // "%o rode %k's rocket."
+  Scale 0.5
+  States
+  {
+  Spawn:
+    MISL A 1 Bright
+    Loop
+  Death:
+    TNT1 A 0 A_SetScale(1.5,1.5)
+	TNT1 A 0 A_PlaySound("weapons/rocklx",CHAN_AUTO,1,0,0.4)
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion",0,0,0,Random(-7,7),Random(-7,7),Random(-7,7))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion",0,0,0,Random(-7,7),Random(-7,7),Random(-7,7))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion",0,0,0,Random(-7,7),Random(-7,7),Random(-7,7))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion",0,0,0,Random(-7,7),Random(-7,7),Random(-7,7))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion",0,0,0,Random(-7,7),Random(-7,7),Random(-7,7))
+    MISL B 8 Bright A_Explode(300,250)
+    MISL C 6 Bright 
+    MISL D 4 Bright
+    Stop
+  }
+}
+
+ACTOR DFakeExplosion
+{
+  Radius 1
+  Height 1
+  +RANDOMIZE
+  +NOGRAVITY
+  RenderStyle Translucent
+  Alpha 0.50
+  Scale 0.75
+  States
+  {
+  Spawn:
+    MISL BCD 0
+  Death:
+    MISL BCBCD 3
+    Stop
+  }
+}
+
+ACTOR LightRocketNade
+{
+  Radius 6
+  Height 4
+  Speed 200
+  Damage (Random(175,210)) //used to just be 35
+  Projectile
+  +RANDOMIZE
+  +DEHEXPLOSION
+  +ROCKETTRAIL
+  +FORCERADIUSDMG
+  -NOGRAVITY
+  Gravity 0.8
+  DeathSound "" //"weapons/rocklx"
+  Decal "BigScorch"
+  Obituary "$OB_MPROCKET" // "%o rode %k's rocket."
+  Scale 0.3
+  States
+  {
+  Spawn:
+    MISL A 1 Bright
+    Loop
+  Death:
+    TNT1 A 0 A_SetScale(1,1)
+	TNT1 A 0 A_NoGravity
+	TNT1 A 0 A_PlaySound("weapons/rocklx",CHAN_AUTO,1,0,0.4)
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+    MISL B 8 Bright A_Explode(200,150)
+    MISL C 6 Bright
+    MISL D 4 Bright
+    Stop
+  }
+}
+
+ACTOR DFakeExplosion2
+{
+  Radius 1
+  Height 1
+  +RANDOMIZE
+  +NOGRAVITY
+  RenderStyle Translucent
+  Alpha 0.50
+  Scale 0.50
+  States
+  {
+  Spawn:
+    MISL BCD 0
+  Death:
+    MISL BCBCD 3
+    Stop
+  }
+}

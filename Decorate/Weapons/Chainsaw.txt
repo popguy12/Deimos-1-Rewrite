@@ -1,0 +1,66 @@
+//YOU'VE MADE THE FATAL MISTAKE OF GETTING CLOSE
+ACTOR DeimosChainSaw : DeimosWeapon Replaces Chainsaw
+{
+  Weapon.Kickback 0
+  Weapon.SelectionOrder 2200
+  Weapon.UpSound "weapons/sawup"
+  Weapon.ReadySound "weapons/sawidle"
+  Inventory.PickupMessage "Nabbed a Chainsaw!"
+  Obituary "$OB_MPCHAINSAW"
+  Tag "$TAG_CHAINSAW"
+  Weapon.SlotNumber 1
+  Decal "BulletChip"
+  +WEAPON.MELEEWEAPON
+  -WEAPON.NOAUTOFIRE
+  States
+  {
+  Ready:
+    TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_speed, "Movement")
+    TNT1 A 0 A_SetSpeed(0.6)
+	TNT1 A 0 A_SetCrosshair(98)
+    SAWG C 1 A_WeaponReady(WRF_ALLOWRELOAD)
+    Loop
+  Deselect:
+    SAWG C 1 A_Lower(14)
+    Loop
+  Select:
+    SAWG C 1 A_Raise(15)
+    Loop
+  Fire:
+	TNT1 A 0 A_AlertMonsters(512)
+    SAWG AB 2 A_Saw("weapons/sawfull","weapons/sawhit",Random(3,8),"Bulletpuff", SF_NOTURN | SF_NOPULLIN)
+    SAWG B 0 A_ReFire
+    Goto Ready
+  Spawn:
+    CSAW A -1
+    Stop
+	
+	Reload: 
+  TNT1 A 0 A_SetCrosshair(98)
+  SAWG C 6
+  TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckAmmo") 
+  Goto Ready
+  
+  CheckAmmo:
+   SAWG C 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" C 0 A_GiveInventory("AmmoCheck")
+   CheckLoop:
+   SAWG C 1
+   TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckLoop")
+   TNT1 A 0 A_TakeInventory("AmmoCheck")
+   CheckFinish:
+   SAWG C 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" C 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   Goto Ready
+	
+  }
+}

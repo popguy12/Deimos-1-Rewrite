@@ -1,38 +1,36 @@
-
-
 ACTOR DeimosMarine : DoomPlayer
 {
-Player.StartItem DeimosHandgun
-Player.StartItem CQC
-Player.StartItem PlayerMedical
-Player.StartItem HandgunMagazine, 15
-Player.StartItem LowCalBullets, 50
-Player.StartItem ShotgunPrimed, 1
-Player.StartItem ShotgunChambered, 1
-Player.StartItem SGRegTube, 8
-Player.StartItem SSGRegBarrel, 2
-Player.StartItem ChaingunMagazine, 60
-Player.StartItem LauncherTube, 4
-Player.StartItem PlasmaRifleBattery, 120
-Player.StartItem BFGBattery, 60
-Player.StartItem ScoutArmor
-DamageFactor 1.50 //squishy 
-Player.RunHealth 300 //no you cannot run normally
-Speed 0.6
-Player.Forwardmove 1
-Player.Sidemove 1.1
-Player.ViewBob 0.4
-Player.AirCapacity 1.5
+	Player.StartItem DeimosHandgun
+	Player.StartItem CQC
+	Player.StartItem PlayerMedical
+	Player.StartItem HandgunMagazine, 15
+	Player.StartItem LowCalBullets, 50
+	Player.StartItem ShotgunPrimed, 1
+	Player.StartItem ShotgunChambered, 1
+	Player.StartItem SGRegTube, 8
+	Player.StartItem SSGRegBarrel, 2
+	Player.StartItem ChaingunMagazine, 60
+	Player.StartItem LauncherTube, 4
+	Player.StartItem PlasmaRifleBattery, 120
+	Player.StartItem BFGBattery, 60
+	Player.StartItem ScoutArmor
+	DamageFactor 1.50 //squishy 
+	Player.RunHealth 300 //no you cannot run normally
+	Speed 0.6
+	Player.Forwardmove 1
+	Player.Sidemove 1.1
+	Player.ViewBob 0.4
+	Player.AirCapacity 1.5
 }
 
 ACTOR AmmoCheck : Inventory
 {
-Inventory.MaxAMount 1
+	Inventory.MaxAMount 1
 }
 
 ACTOR MedicalDrop : Inventory
 {
-Inventory.MaxAmount 1
+	Inventory.MaxAmount 1
 }
 
 
@@ -69,4 +67,3 @@ ACTOR DodgeFatigue : PowerupGiver
 	Powerup.Type "DodgeCooldown"
 	+AUTOACTIVATE
 }
-

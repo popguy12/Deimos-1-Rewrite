@@ -1,0 +1,438 @@
+//G R O O V Y .
+ACTOR DeimosSSG : DeimosWeapon Replaces SuperShotgun
+{
+  Weapon.SelectionOrder 1800
+  Weapon.SlotPriority 200
+  Inventory.PickupMessage "Seized a Super Shotgun!"
+  Weapon.AmmoUse 0
+  Weapon.AmmoGive2 10
+  Weapon.AmmoType1 "SSGRegBarrel"
+  Weapon.AmmoType2 "StandardShells"
+  Weapon.SlotNumber 3
+  Decal "BulletChip"
+  AttackSound "weapons/ssgnfire"
+  Weapon.Kickback 300
+  Tag "Terran Break-Action"
+  States
+  {
+  Ready:
+    SHTG A 0 A_JumpIf(getplayerinput(input_buttons) & bt_speed, "Movement")
+    SHTG A 0 A_SetSpeed(0.6)
+    SHT2 A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_ALLOWZOOM)
+	SHTG A 0 A_SetCrosshair(80)
+    Loop
+  Deselect:
+    TNT1 A 0 A_SetCrosshair(98)
+    SHT2 A 1 A_Lower(16)
+    Loop
+  Select:
+    SHT2 A 1 A_Raise(20)
+    Loop
+	
+ Zoom:
+    TNT1 A 0 A_JumpIfInventory("SSGShellMode",1,"ModeSwitch")
+    TNT1 A 0 A_GiveInventory("SSGShellMode",1)
+    TNT1 A 0 A_StartSound("weapons/empty",CHAN_AUTO)
+    SHT2 A 5 A_Log("Explosive Slugs Selected.")
+    Goto Ready
+   ModeSwitch:
+    TNT1 A 0 A_TakeInventory("SSGShellMode",1)
+    TNT1 A 0 A_StartSound("weapons/empty",CHAN_AUTO)
+    SHT2 A 5 A_Log("Buckshot Shells Selected.")
+    Goto Ready
+	
+  Fire: //make quick-switchable perhaps, ALSO SINGLE FIRE MAYBE
+    TNT1 A 0 A_JumpIfInventory("SSGSlugBarrel",2,"SlugFire") 
+    TNT1 A 0 A_JumpIfInventory("SSGRegBarrel",2,"StandardFire") 
+	Goto Empty
+	
+  StandardFire:
+    TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "CrouchedFire")
+    SHT2 A 0 A_GunFlash
+	TNT1 A 0 A_AlertMonsters
+	TNT1 A 0 A_TakeInventory("SSGRegBarrel",2)
+    SHT2 A 1 A_FireBullets(5, 5, 16, Random(22,23), "BulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+	TNT1 A 0 A_SetPitch(pitch-7.5)
+    TNT1 A 0 A_SetAngle(angle+Random(-3,3))
+    TNT1 A 0 A_Quake(8,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,60)
+	SHT2 A 4 Offset(0,70)
+	SHT2 A 1 Offset(0,66)
+	SHT2 A 1 A_WeaponOffset(0,62,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,58,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,54,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+  CrouchedFire:
+	SHT2 A 0 A_GunFlash
+	TNT1 A 0 A_AlertMonsters
+	TNT1 A 0 A_TakeInventory("SSGRegBarrel",2)
+    SHT2 A 1 A_FireBullets(2.4, 2.4, 16, Random(22,23), "BulletPuff", FBF_NORANDOM | FBF_USEAMMO) 
+	TNT1 A 0 A_SetPitch(pitch-5)
+	TNT1 A 0 A_Quake(6,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,60)
+	SHT2 A 4 Offset(0,70)
+	SHT2 A 1 Offset(0,66)
+	SHT2 A 1 A_WeaponOffset(0,62,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,58,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,54,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+	
+  SlugFire: 
+    TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "SlugCrouchedFire")
+    SHT2 A 0 A_GunFlash
+	TNT1 A 0 A_AlertMonsters
+	TNT1 A 0 A_TakeInventory("SSGSlugBarrel",2)
+    SHT2 A 1 A_FireBullets(0.7, 0.7, 2, Random(120,130), "SlugPuff", FBF_NORANDOM)
+	TNT1 A 0 A_SetPitch(pitch-7.5)
+    TNT1 A 0 A_SetAngle(angle+Random(-3,3))
+    TNT1 A 0 A_Quake(8,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,60)
+	SHT2 A 4 Offset(0,70)
+	SHT2 A 1 Offset(0,66)
+	SHT2 A 1 A_WeaponOffset(0,62,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,58,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,54,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+  SlugCrouchedFire:
+	SHT2 A 0 A_GunFlash
+	TNT1 A 0 A_AlertMonsters
+	TNT1 A 0 A_TakeInventory("SSGSlugBarrel",2)
+    SHT2 A 1 A_FireBullets(0.3, 0.3, 2, Random(120,130), "SlugPuff", FBF_NORANDOM) 
+	TNT1 A 0 A_SetPitch(pitch-5)
+	TNT1 A 0 A_Quake(6,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,60)
+	SHT2 A 4 Offset(0,70)
+	SHT2 A 1 Offset(0,66)
+	SHT2 A 1 A_WeaponOffset(0,62,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,58,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,54,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+	
+	
+  AltFire: 
+    TNT1 A 0 A_JumpIfInventory("SSGSlugBarrel",1,"SingleSlugFire") 
+    TNT1 A 0 A_JumpIfInventory("SSGRegBarrel",1,"SingleStandardFire") 
+  Goto Empty
+ SingleStandardFire:
+    TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "SingleCrouchedFire")
+	TNT1 A 0 A_JumpIfInventory("SSGRegBarrel",2,3) //did not feel like making separate L/R states lmao
+    SHT2 A 0 A_Overlay(-5,"FlashLeft")
+	SHT2 A 0 A_Jump(256,2)
+	SHT2 A 0 A_Overlay(-5,"FlashRight")
+	TNT1 A 0
+	TNT1 A 0 A_TakeInventory("SSGRegBarrel",1)
+	TNT1 A 0 A_AlertMonsters
+    SHT2 A 1 A_FireBullets(3, 3, 8, Random(22,23), "BulletPuff", FBF_NORANDOM)
+	TNT1 A 0 A_SetPitch(pitch-4.5)
+    TNT1 A 0 A_SetAngle(angle+Random(-2,2))
+    TNT1 A 0 A_Quake(6,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,50)
+	SHT2 A 2 Offset(0,55)
+	SHT2 A 1 Offset(0,52)
+	SHT2 A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,48,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+  SingleCrouchedFire:
+	TNT1 A 0 A_JumpIfInventory("SSGRegBarrel",2,3)
+    SHT2 A 0 A_Overlay(-5,"FlashLeft")
+	SHT2 A 0 A_Jump(256,2)
+	SHT2 A 0 A_Overlay(-5,"FlashRight")
+	TNT1 A 0
+	TNT1 A 0 A_TakeInventory("SSGRegBarrel",1)
+	TNT1 A 0 A_AlertMonsters
+    SHT2 A 1 A_FireBullets(1.4, 1.4, 8, Random(22,23), "BulletPuff", FBF_NORANDOM) 
+	TNT1 A 0 A_SetPitch(pitch-2.5)
+	TNT1 A 0 A_Quake(4,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,50)
+	SHT2 A 2 Offset(0,55)
+	SHT2 A 1 Offset(0,52)
+	SHT2 A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,48,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+	
+ SingleSlugFire: 
+    TNT1 A 0 A_JumpIf(getcrouchfactor < 1.0, "SingleSlugCrouchedFire")
+	TNT1 A 0 A_JumpIfInventory("SSGSlugBarrel",2,3)
+    SHT2 A 0 A_Overlay(-5,"FlashLeft")
+	SHT2 A 0 A_Jump(256,2)
+	SHT2 A 0 A_Overlay(-5,"FlashRight")
+	TNT1 A 0
+	TNT1 A 0 A_TakeInventory("SSGSlugBarrel",1)
+	TNT1 A 0 A_AlertMonsters
+    SHT2 A 1 A_FireBullets(0.5, 0.5, 1, Random(120,130), "SlugPuff", FBF_NORANDOM)
+	TNT1 A 0 A_SetPitch(pitch-4.5)
+    TNT1 A 0 A_SetAngle(angle+Random(-2,2))
+    TNT1 A 0 A_Quake(6,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,50)
+	SHT2 A 2 Offset(0,55)
+	SHT2 A 1 Offset(0,52)
+	SHT2 A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,48,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+  SingleSlugCrouchedFire:
+	TNT1 A 0 A_JumpIfInventory("SSGSlugBarrel",2,3)
+    SHT2 A 0 A_Overlay(-5,"FlashLeft")
+	SHT2 A 0 A_Jump(256,2)
+	SHT2 A 0 A_Overlay(-5,"FlashRight")
+	TNT1 A 0
+	TNT1 A 0 A_TakeInventory("SSGSlugBarrel",1)
+	TNT1 A 0 A_AlertMonsters
+    SHT2 A 1 A_FireBullets(0.2, 0.2, 1, Random(120,130), "SlugPuff", FBF_NORANDOM) 
+	TNT1 A 0 A_SetPitch(pitch-2.5)
+	TNT1 A 0 A_Quake(4,4,0,6,"nothin")
+	SHT2 A 1 Offset(0,50)
+	SHT2 A 2 Offset(0,55)
+	SHT2 A 1 Offset(0,52)
+	SHT2 A 1 A_WeaponOffset(0,50,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,48,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,44,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,42,WOF_INTERPOLATE)
+	SHT2 A 1 A_WeaponOffset(0,35,WOF_INTERPOLATE)
+    SHT2 A 1
+    Goto Ready
+  
+  Flash:
+    SHT2 I 2 Bright A_Light1
+    SHT2 J 3 Bright A_Light2
+    Goto LightDone
+  FlashRight:
+    TNT1 A 0 A_OverlayOffset(-5,5,5)
+    SHTF B 1 Bright A_Light1
+    SHTF A 1 Bright A_Light2
+    Goto LightDone
+  FlashLeft:
+    TNT1 A 0 A_OverlayOffset(-5,-5,5)
+    SHTF B 1 Bright A_Light1
+    SHTF A 1 Bright A_Light2
+    Goto LightDone
+	
+  Spawn:
+    SGN2 A -1
+    Stop
+	
+ Reload: 
+  TNT1 A 0 A_SetCrosshair(98)
+  SHT2 A 6
+  TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckAmmo") 
+  TNT1 A 0 A_JumpIfInventory("SSGShellMode",1,"ESReload")
+  SHT2 A 0 A_JumpIfInventory("SSGRegBarrel", 2, "Ready")
+  SHT2 A 0 A_JumpIfInventory("StandardShells", 1, "ReloadWork") 
+  Goto Ready
+ ReloadWork: 
+  SHT2 A 0 
+  "####" A 0 A_OverlayPivotAlign(PSP_WEAPON,PSPA_RIGHT,PSPA_BOTTOM)
+  "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-3,WOF_ADD)
+  "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-4,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-5,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-6,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-7,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-8,WOF_ADD)
+  "####" A 1 A_WeaponOffset(8,58,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-8,WOF_ADD)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,41,WOF_ADD)
+  "####" A 0
+  "####" A 0 A_WeaponOffset(10,54) 
+  "####" A 0 A_PlaySound("weapons/ssgopen", CHAN_AUTO)
+  "####" E 4
+  "####" A 0 A_JumpIfInventory("SSGSlugBarrel",1,"ESUnload") 
+  "####" F 4
+ ReloadLoop: 
+  SHT2 E 0 A_JumpIfInventory("SSGRegBarrel",2,"ReloadFinish")
+  "####" E 0 A_JumpIfInventory("StandardShells",1,1)
+  Goto ReloadFinish
+  "####" E 0 A_PlaySound("weapons/shellinsert",CHAN_AUTO)
+  "####" E 0 A_TakeInventory("StandardShells", 1)
+  "####" E 0 A_GiveInventory("SSGRegBarrel", 1) //probably add a casing drop function here if/when casings are adding
+  Loop
+ ReloadFinish: 
+  SHT2 A 0 A_PlaySound("weapons/ssgclose", CHAN_AUTO)
+  SHT2 GGHH 3
+  SHT2 H 2 A_WeaponOffset(8,50,WOF_INTERPOLATE)
+  SHT2 H 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  SHT2 H 1 A_WeaponOffset(4,44,WOF_INTERPOLATE)
+  SHT2 A 1 A_WeaponOffset(2,38,WOF_INTERPOLATE)
+  SHT2 A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  goto Ready
+  
+ ESReload:
+  SHT2 A 0 A_JumpIfInventory("SSGSlugBarrel", 2, "Ready")
+  SHT2 A 0 A_JumpIfInventory("ExplosiveSlugShells", 1, "ESReloadWork") 
+  Goto Ready
+ ESReloadWork: 
+  SHT2 A 0 
+  "####" A 0 A_OverlayPivotAlign(PSP_WEAPON,PSPA_RIGHT,PSPA_BOTTOM)
+  "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-3,WOF_ADD)
+  "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-4,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-5,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-6,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,52,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-7,WOF_ADD)
+  "####" A 1 A_WeaponOffset(6,54,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-8,WOF_ADD)
+  "####" A 1 A_WeaponOffset(8,58,WOF_INTERPOLATE)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,-8,WOF_ADD)
+  "####" A 0 A_OverlayRotate(PSP_WEAPON,41,WOF_ADD)
+  "####" A 0
+  "####" A 0 A_WeaponOffset(10,58) 
+  "####" A 0 A_PlaySound("weapons/ssgopen", CHAN_AUTO)
+  "####" E 4
+  "####" A 0 A_JumpIfInventory("SSGRegBarrel",1,"BuckShotUnload") 
+  "####" F 4
+ ESReloadLoop: 
+  SHT2 E 0 A_JumpIfInventory("SSGSlugBarrel",2,"ESReloadFinish")
+  "####" E 0 A_JumpIfInventory("ExplosiveSlugShells",1,1)
+  Goto ESReloadFinish
+  "####" E 0 A_PlaySound("weapons/shellinsert",CHAN_AUTO)
+  "####" E 0 A_TakeInventory("ExplosiveSlugShells", 1)
+  "####" E 0 A_GiveInventory("SSGSlugBarrel", 1) 
+  Loop
+ ESReloadFinish: 
+  SHT2 A 0 A_PlaySound("weapons/ssgclose", CHAN_AUTO)
+  SHT2 GGHH 3
+  SHT2 H 2 A_WeaponOffset(8,50,WOF_INTERPOLATE)
+  SHT2 H 1 A_WeaponOffset(6,48,WOF_INTERPOLATE)
+  SHT2 H 1 A_WeaponOffset(4,44,WOF_INTERPOLATE)
+  SHT2 A 1 A_WeaponOffset(2,38,WOF_INTERPOLATE)
+  SHT2 A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+  goto Ready
+  
+  BuckshotUnload: //rework anims
+   SHT2 E 1 
+  BuckshotUnloadLoop: 
+  SHT2 E 0 A_JumpIfInventory("SSGRegBarrel",1,1)
+  Goto ESReloadWork+18
+  "####" A 0 A_PlaySound("weapons/shellinsert",CHAN_AUTO)
+  "####" A 0 A_SpawnItemEx("SingleStandardShell",Random(-3,3),Random(-3,3),34)
+  "####" A 0 A_TakeInventory("SSGRegBarrel", 1) 
+  Loop
+  
+  ESUnload: //rework anims
+   SHT2 E 1 
+  ESUnloadLoop: 
+  SHT2 E 0 A_JumpIfInventory("SSGSlugBarrel",1,1)
+  Goto ReloadWork+18
+  "####" A 0 A_PlaySound("weapons/shellinsert",CHAN_AUTO)
+  "####" A 0 A_SpawnItemEx("SingleExplosiveSlugShell",Random(-3,3),Random(-3,3),34)
+  "####" A 0 A_TakeInventory("SSGSlugBarrel", 1) 
+  Loop
+  
+  CheckAmmo:
+   SHT2 A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 0 A_GiveInventory("AmmoCheck")
+   CheckLoop:
+   SHT2 A 1
+   TNT1 A 0 A_JumpIf(getplayerinput(input_buttons) & bt_reload, "CheckLoop")
+   TNT1 A 0 A_TakeInventory("AmmoCheck")
+   CheckFinish:
+   SHT2 A 1 A_WeaponOffset(18,72,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(12,62,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(8,52,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(6,44,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(4,38,WOF_INTERPOLATE)
+   "####" A 1 A_WeaponOffset(2,35,WOF_INTERPOLATE)
+   Goto Ready
+   
+	Empty:
+	SHT2 A 5 A_StartSound("weapons/empty",CHAN_AUTO)
+	Goto Ready
+	
+  }
+}
+
+ACTOR SSGShellMode : Inventory
+{
+Inventory.MaxAMount 1
+}
+
+Actor SSGRegBarrel : Ammo //regular shells
+{
+		Inventory.Amount 1 
+		Inventory.MaxAmount 2
+		Ammo.BackPackAmount 0 
+		Ammo.BackPackMaxAmount 2
+		+INVENTORY.IGNORESKILL 
+}
+
+Actor SSGSlugBarrel : Ammo //explosive slugs
+{
+		Inventory.Amount 1 
+		Inventory.MaxAmount 2
+		Ammo.BackPackAmount 0 
+		Ammo.BackPackMaxAmount 2
+		+INVENTORY.IGNORESKILL 
+}
+
+ACTOR SlugPuff : BulletPuff
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +ALLOWPARTICLES
+  +RANDOMIZE
+  +PUFFONACTORS
+  +EXTREMEDEATH
+  +FORCERADIUSDMG
+  VSpeed 1
+  Mass 5
+  Scale 0.8
+  States
+  {
+  Spawn:
+    MISL B 0 Bright
+	MISL B 0 Bright A_Quake(5,2,0,400,"nothing")
+	TNT1 A 0 A_PlaySound("weapons/rocklx",CHAN_AUTO,1,0,0.4)
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+	TNT1 A 0 A_SpawnItemEx("DFakeExplosion2",0,0,0,Random(-4,4),Random(-4,4),Random(-4,4))
+    MISL B 4 Bright A_Explode(175,120,0)
+    MISL CD 4 Bright 
+    Stop
+  Death:
+    PUFF CD 3
+    Stop
+  }
+}
+
+ACTOR SSGPuff : Bulletpuff
+{
++EXTREMEDEATH
+}
+
